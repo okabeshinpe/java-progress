@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class who_ami {
+public class WhoAmI {
 
     public static void main(String[] args){
 
