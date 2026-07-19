@@ -3,6 +3,7 @@
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println("The biggest, the largest.");
+        System.out.println("This might just seem to be a lot of nonsense.");
+        System.out.println("But ill get up there soon");
     }
 }
