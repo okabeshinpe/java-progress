@@ -5,7 +5,7 @@ public class for_loops_practice1 {
 
         Scanner scanner = new Scanner(System.in);
 
-        // 07/21/26
+        // 07/22/26
         // a little bit rusty, got too focused on math
 
         // VARIABLE
