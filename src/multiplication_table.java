@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class for_loops_practice1 {
+public class multiplication_table {
 
     public static void main(String[] args){
 
