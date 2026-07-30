@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class mini_calc {
+public class MiniCalc {
 
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
