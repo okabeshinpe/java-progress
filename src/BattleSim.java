@@ -18,33 +18,89 @@ public class BattleSim {
         // CHECKS THE MOVES
         int playerMove;
 
-        // GAME STATS
-        int enemyAttack = 45;
-        int enemyHp = 200;
-        int playerStrength = 50;
-        int playerHP = 200;
+        // ENEMY STATS
+        int enemyAttack = 18;
+        int enemyHp = 120;
+
+        // PLAYER STATS (about to scrap this)
+        int playerAttack = 0;
+        int playerMana;
+        int playerHP = 0;
+        int playerDefense;
+
         int healingPot = 25;
+
+        int playerClass;
+
+        // ASTROLOGER STATS
+        int astrologerHp = 90;
+        int astrologerMana = 150;
+        int astrologerAttack = 32;
+        int astrologerDefense = 5;
+
+        //  WARRIOR STATS
+        int warriorHp = 110;
+        int warriorMana = 120;
+        int warriorAttack = 20;
+        int warriorDefense = 11;
+
+        // CONFESSOR STATS;
+        int confessorHp = 190;
+        int confessorMana = 110;
+        int confessorAttack = 55;
+        int confessorDefense = 14;
+
+
+        do {
+            playerClass();
+            System.out.print("Pick a class: ");
+            playerClass = scanner.nextInt();
+
+            switch (playerClass) {
+                case 1 -> {
+                    astrologerStats(astrologerHp, astrologerMana, astrologerAttack, astrologerDefense);
+                    playerHP = astrologerHp;
+                    playerMana = astrologerMana;
+                    playerAttack = astrologerAttack;
+                    playerDefense = astrologerDefense;
+                }
+                case 2 -> {
+                    warriorStats(warriorHp, warriorMana, warriorAttack, warriorDefense);
+                    playerHP = warriorHp;
+                    playerMana = warriorMana;
+                    playerAttack = warriorAttack;
+                    playerDefense = warriorDefense;
+                }
+                case 3 -> {
+                    confessorStats(confessorHp, confessorMana, confessorAttack, confessorDefense);
+                    playerHP = confessorHp;
+                    playerMana = confessorMana;
+                    playerAttack = confessorAttack;
+                    playerDefense = confessorDefense;
+                }
+                default -> {
+                    System.out.println("INVALID CLASS");
+
+                }
+            }
+        }while (playerClass < 1 || playerClass > 3);
 
         do {
             // SHOWS THE CURRENT GAME STATS
-            roundInfo(playerHP, playerStrength, enemyHp, enemyAttack);
+            playerMoves(playerHP,playerAttack,enemyHp,enemyAttack);
             System.out.print("Pick a move: ");
             playerMove = scanner.nextInt();
-            Line();
+            line();
             if (playerMove == 1){
-                // PLAYER TAKES IT TURN THEN ENEMY TAKES THEIRS. SIMPLE
-                enemyHp = playerTurn(playerStrength, enemyHp);
-                Line();
+                enemyHp = playerTurn(playerAttack, enemyHp);
+                line();
                 playerHP = enemyTurn(playerHP, enemyAttack);
             }
-            // HEALING MOVE, OFC IT'S UNBALANCED, CLASSIC...
             else if (playerMove == 2) {
                 if (playerHP >= 200){
-                    // CHECKS IF HP IS GREATER THAN OR EQUAL TO 200, IF IT IS THEN DENY TH HEAL
                     System.out.println("Heal Denied!");
                     System.out.println("Player cannot heal further the max hp!");
                     playerHP = enemyTurn(playerHP, enemyAttack);
-                    // THIS COULD BE BETTER. WOULD BE BETTER SOON
                 }
                 else{
                     /*
@@ -57,19 +113,18 @@ public class BattleSim {
                 }
                 // CHECKS CURRENT HP STATS TO SEE IF SOMEONE DIED ALREADY
             } if (playerHP <= 0){
-                Line();
+                line();
                 System.out.println("Game Over!");
                 System.out.println("Rounders Wins!");
-                Line();
+                line();
                 return;
             } else if (enemyHp <= 0){
-                Line();
+                line();
                 System.out.println("Game Over!");
                 System.out.println("Player Wins!");
-                Line();
+                line();
                 return;
             }
-            // CATCHING THE INVALID MOVES // THIS IS IN A WEIRD STATE COULD BE BETTER
             if (playerMove > 3 || playerMove <= 0) {
                 System.out.println("Invalid Player Move!");
             }
@@ -77,10 +132,6 @@ public class BattleSim {
         } while (playerMove != 3);
         System.out.println("Player flees..");
 
-    /*
-    NAMING COULD DEFINITELY DO SOME WORK
-    AND THE ORDER OF IT BOTHERS ME. MAKE IT CLEANER SOON
-     */
     }
     // PLAYER INFLICTS DAMAGE TO ENEMY
     static int playerAttack(int enemyHP, int playerAttack) {
@@ -95,18 +146,18 @@ public class BattleSim {
         return playerHp - enemyAttack;
     }
     // JUST A LINE, AESTHETIC PURPOSES
-    static void Line() {
+    static void line() {
         System.out.println("================");
     }
     // SHOWS CURRENT GAME STATS
     static void roundInfo(int playerHP, int playerStrength, int enemyHp, int enemyAttack) {
-        Line();
+        line();
         System.out.printf("Your HP: %d\n", playerHP);
         System.out.printf("Your Attack: %d\n", playerStrength);
-        Line();
+        line();
         System.out.printf("Enemy HP: %d\n", enemyHp);
         System.out.printf("Enemy Attack: %d\n", enemyAttack);
-        Line();
+        line();
     }
     // PLAYER ATTACK SEQUENCE / TURN
     static int playerTurn(int playerAttack, int enemyHp) throws InterruptedException {
@@ -139,5 +190,45 @@ public class BattleSim {
         pause();
         System.out.printf("HP healed by %d HP\n", healingPot );
         return heal(healingPot, playerHp);
+    }
+    static void playerMoves(int hp, int attack, int enemyHp, int enemyAttack){
+        roundInfo(hp,attack,enemyHp,enemyAttack);
+        System.out.println("1. Attack");
+        System.out.println("2. Heal");
+        System.out.println("3. Run");
+        line();
+    }
+    static void playerClass(){
+        line();
+        System.out.println("   BATTLE SIM");
+        line();
+        System.out.println("1. Astrologer");
+        System.out.println("2. Warrior");
+        System.out.println("3. Confessor");
+        line();
+    }
+    static void astrologerStats(int hp, int mana, int attack, int defense){
+        line();
+        System.out.printf("HP: %d\n", hp);
+        System.out.printf("MP: %d\n", mana);
+        System.out.printf("ATK: %d\n", attack);
+        System.out.printf("DEF: %d\n", defense);
+        line();
+    }
+    static void warriorStats(int hp, int mana, int attack, int defense){
+        line();
+        System.out.printf("HP: %d\n", hp);
+        System.out.printf("MP: %d\n", mana);
+        System.out.printf("ATK: %d\n", attack);
+        System.out.printf("DEF: %d\n", defense);
+        line();
+    }
+    static void confessorStats(int hp, int mana, int attack, int defense){
+        line();
+        System.out.printf("HP: %d\n", hp);
+        System.out.printf("MP: %d\n", mana);
+        System.out.printf("ATK: %d\n", attack);
+        System.out.printf("DEF: %d\n", defense);
+        line();
     }
 }
